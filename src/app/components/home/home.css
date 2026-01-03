@@ -38,7 +38,7 @@
   border-radius: 8px;
   text-align: center;
   width: 200px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
 }
 
 .stat-card h3 {

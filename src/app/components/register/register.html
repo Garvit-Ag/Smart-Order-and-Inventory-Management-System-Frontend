@@ -27,6 +27,9 @@
       @if (isLoading()) { Registering... } @else { Register }
     </button>
   </form>
+  <p class="switch-form">
+    Already have an Account? <a routerLink="/login" routerLinkActive="active"> Log In </a>
+  </p>
 </div>
 
 @if (showPopup()) {

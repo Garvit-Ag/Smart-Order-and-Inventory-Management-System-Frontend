@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core'; // Added inject
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth'; // Import your service
 
 @Component({
   selector: 'app-navbar',
@@ -10,17 +11,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.css'
 })
 export class NavbarComponent {
-  // 1. Define State using Signals (Mocking data for now)
-  // Change these values to test different views: 'GUEST', 'CUSTOMER', 'ADMIN'
-  userRole = signal<string>('GUEST'); 
-  isLoggedIn = signal<boolean>(false);
+  // Inject the AuthService
+  // This gives you access to the signals: auth.isLoggedIn and auth.currentUserRole
+  public auth = inject(AuthService);
 
   constructor() {}
 
-  // 2. Simple Logout Action
   logout() {
-    this.isLoggedIn.set(false);
-    this.userRole.set('GUEST');
-    // In a real app, you would also route the user back to login here
+    // Call the central logout logic in the service
+    this.auth.logout();
   }
 }

@@ -4,44 +4,43 @@
       <span>SmartLogistics</span>
     </div>
 
-  <ul class="nav-links">
-    
-    <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+ <ul class="nav-links">
+  <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
 
-    @if (!isLoggedIn()) {
-      <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
-      <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
-    }
-
-    @if (isLoggedIn() && userRole() === 'CUSTOMER') {
+  @if (!auth.isLoggedIn()) {
+    <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+    <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
+  } @else {
+    <!-- User is logged in, check role -->
+    @if (auth.currentUserRole() === 'CUSTOMER') {
       <li><a routerLink="/products" routerLinkActive="active">Browse Products</a></li>
       <li><a routerLink="/my-orders" routerLinkActive="active">My Orders</a></li>
       <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
     }
 
-    @if (isLoggedIn() && userRole() === 'ADMIN') {
+    @if (auth.currentUserRole() === 'ADMIN') {
       <li><a routerLink="/admin/inventory" routerLinkActive="active">Manage Inventory</a></li>
       <li><a routerLink="/admin/orders" routerLinkActive="active">All Orders</a></li>
       <li><a routerLink="/admin/billing" routerLinkActive="active">Billing & Reports</a></li>
     }
 
-    @if (isLoggedIn() && userRole() === 'SALES_EXECUTIVE') {
+    @if (auth.currentUserRole() === 'SALES_EXECUTIVE') {
       <li><a routerLink="/admin/orders" routerLinkActive="active">All Orders</a></li>
     }
 
-    @if (isLoggedIn() && userRole() === 'WAREHOUSE_MANAGER') {
+    @if (auth.currentUserRole() === 'WAREHOUSE_MANAGER') {
       <li><a routerLink="/admin/inventory" routerLinkActive="active">Manage Inventory</a></li>
     }
 
-    @if (isLoggedIn() && userRole() === 'FINANCE_OFFICIER') {
+    @if (auth.currentUserRole() === 'FINANCE_OFFICER') {
       <li><a routerLink="/admin/billing" routerLinkActive="active">Billing & Reports</a></li>
     }
+  }
+</ul>
 
-  </ul>
-
-  @if (isLoggedIn()) {
+  @if (auth.isLoggedIn()) {
     <div class="user-actions">
-      <span class="role-badge">{{ userRole() }}</span>
+      <span class="role-badge">{{ auth.currentUserRole() }}</span>
       <button (click)="logout()" class="logout-btn">Logout</button>
     </div>
   }
