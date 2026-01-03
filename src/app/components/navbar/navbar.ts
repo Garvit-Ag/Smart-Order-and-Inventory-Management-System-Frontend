@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'; // Added inject
+import { Component, inject, signal } from '@angular/core'; // Added inject
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth'; // Import your service
@@ -11,14 +11,23 @@ import { AuthService } from '../../services/auth'; // Import your service
   styleUrl: './navbar.css'
 })
 export class NavbarComponent {
-  // Inject the AuthService
-  // This gives you access to the signals: auth.isLoggedIn and auth.currentUserRole
   public auth = inject(AuthService);
 
   constructor() {}
 
+  showDropdown = signal(false);
+  get user() {
+    return this.auth.getUserInfo();
+  }
+
+  toggleDropdown() {
+    this.showDropdown.update(v => !v);
+  }
+
   logout() {
-    // Call the central logout logic in the service
+    this.showDropdown = signal(false);
     this.auth.logout();
   }
+
+  
 }

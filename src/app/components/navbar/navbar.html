@@ -37,11 +37,20 @@
     }
   }
 </ul>
-
   @if (auth.isLoggedIn()) {
-    <div class="user-actions">
-      <span class="role-badge">{{ auth.currentUserRole() }}</span>
-      <button (click)="logout()" class="logout-btn">Logout</button>
+  <div class="profile-section">
+    <div class="logo" (click)="toggleDropdown()">
+        <img src="/person_11081570.png" alt="Profile"/>
     </div>
-  }
+
+    @if (showDropdown()) {
+      <div class="profile-card">
+        <p><strong>Email:</strong> {{ user?.email }}</p>
+        <p><strong>Access:</strong> {{ user?.role }}</p>
+        <hr>
+        <button class="logout-link " (click)="logout()">Logout</button>
+      </div>
+    }
+  </div>
+}
 </nav>

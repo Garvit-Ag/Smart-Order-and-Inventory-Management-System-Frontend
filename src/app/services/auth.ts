@@ -9,40 +9,62 @@ import { jwtDecode } from 'jwt-decode';
 export class AuthService {
 
   private http = inject(HttpClient);
-  private loginUrl = 'http://localhost:8765/auth/login';
-
-  // Signals to keep track of the user globally
-  currentUserRole = signal<string | null>(localStorage.getItem('role'));
-  isLoggedIn = signal<boolean>(!!localStorage.getItem('token'));
-
-  login(credentials: any): Observable<string> {
-    return this.http.post(this.loginUrl, credentials, { responseType: 'text' }).pipe(
-      tap(token => {
-        // 1. Save Token to LocalStorage
-        localStorage.setItem('token', token);
-        
-        // 2. Decode the token to get the Role
-        const decoded: any = jwtDecode(token);
-        const role = decoded.role; // This matches your .claim("role", ...)
-        
-        // 3. Update Signals
-        localStorage.setItem('role', role);
-        this.currentUserRole.set(role);
-        this.isLoggedIn.set(true);
-      })
-    );
-  }
-
-  logout() {
-    localStorage.clear();
-    this.currentUserRole.set(null);
-    this.isLoggedIn.set(false);
-  }
+  
+  //register
   private apiUrl = 'http://localhost:8765/auth/register';
-
-  constructor() {}
-
   registerUser(userData: any): Observable<string> {
     return this.http.post(this.apiUrl, userData, { responseType: 'text' });
   }
+
+  //login
+  private loginUrl = 'http://localhost:8765/auth/login';
+  currentUserRole = signal<string | null>(localStorage.getItem('role'));
+  currentUserEmail = signal<string | null>(localStorage.getItem('email'));
+  currentUserId = signal<string | null>(localStorage.getItem('userId'));
+
+  isLoggedIn = signal<boolean>(!!localStorage.getItem('token'));
+
+  login(credentials: any): Observable<string> {
+    return this.http
+      .post(this.loginUrl, credentials, { responseType: 'text' })
+      .pipe(
+        tap(token => {
+          localStorage.setItem('token', token);
+
+          const decoded: any = jwtDecode(token);
+
+          const role = decoded.role;
+          const email = decoded.sub;
+          const userId = decoded.userId;
+
+          localStorage.setItem('role', role);
+          localStorage.setItem('email', email);
+          localStorage.setItem('userId', userId);
+
+          this.currentUserRole.set(role);
+          this.currentUserEmail.set(email);
+          this.currentUserId.set(userId);
+          this.isLoggedIn.set(true);
+        })
+      );
+  }
+
+  //profile
+  getUserInfo() {
+    return {
+      email: this.currentUserEmail(),      // Subject (set in your Jwts.builder)
+      id: this.currentUserId(),      // Claim "userId"
+      role: this.currentUserRole()       // Claim "role"
+    }
+  }
+
+  //logout
+  logout() {
+    localStorage.clear();
+    this.currentUserRole.set(null);
+    this.currentUserEmail.set(null);
+    this.currentUserId.set(null);
+    this.isLoggedIn.set(false);
+  }
+
 }
