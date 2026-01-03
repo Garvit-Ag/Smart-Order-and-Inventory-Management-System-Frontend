@@ -1,7 +1,6 @@
 .app-layout {
   min-height: 100vh;
-  background-image: url('/MainScreenBackground.jpg');
+  background-image: url('/worldmap2.jpg');
   background-position: center;
-  background-size: cover;
   background-repeat: no-repeat;
 }
