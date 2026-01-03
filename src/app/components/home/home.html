@@ -1,0 +1,43 @@
+<div class="home-wrapper">
+  <header class="hero">
+    <h1>Welcome to {{ companyName() }}</h1>
+    <p class="mission-text">{{ companyMission() }}</p>
+  </header>
+
+  <hr>
+
+  <section class="about">
+    <h2>About Our System</h2>
+    <p>
+      Our Smart Order and Inventory Management System is designed to help businesses 
+      track stock levels, manage customer orders, and optimize warehouse operations 
+      in real-time. We bridge the gap between supply and demand.
+    </p>
+  </section>
+
+  <section class="stats-container">
+    <div class="stat-card">
+      <h3>{{ totalOrders() }}</h3>
+      <p>Orders Delivered</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>{{ customersServed() }}</h3>
+      <p>Happy Customers</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>{{ warehouses() }}</h3>
+      <p>Global Warehouses</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>{{ activeUsers() }}</h3>
+      <p>Daily Active Users</p>
+    </div>
+  </section>
+
+  <footer class="contact">
+    <p>Contact us at: support@smartlogistics.com</p>
+  </footer>
+</div>
