@@ -1,0 +1,48 @@
+<nav class="navbar">
+  <div class="logo">
+      <img src="/Logo.jpg" alt="SmartLogistics Logo" />
+      <span>SmartLogistics</span>
+    </div>
+
+  <ul class="nav-links">
+    
+    <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+
+    @if (!isLoggedIn()) {
+      <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+      <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
+    }
+
+    @if (isLoggedIn() && userRole() === 'CUSTOMER') {
+      <li><a routerLink="/products" routerLinkActive="active">Browse Products</a></li>
+      <li><a routerLink="/my-orders" routerLinkActive="active">My Orders</a></li>
+      <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
+    }
+
+    @if (isLoggedIn() && userRole() === 'ADMIN') {
+      <li><a routerLink="/admin/inventory" routerLinkActive="active">Manage Inventory</a></li>
+      <li><a routerLink="/admin/orders" routerLinkActive="active">All Orders</a></li>
+      <li><a routerLink="/admin/billing" routerLinkActive="active">Billing & Reports</a></li>
+    }
+
+    @if (isLoggedIn() && userRole() === 'SALES_EXECUTIVE') {
+      <li><a routerLink="/admin/orders" routerLinkActive="active">All Orders</a></li>
+    }
+
+    @if (isLoggedIn() && userRole() === 'WAREHOUSE_MANAGER') {
+      <li><a routerLink="/admin/inventory" routerLinkActive="active">Manage Inventory</a></li>
+    }
+
+    @if (isLoggedIn() && userRole() === 'FINANCE_OFFICIER') {
+      <li><a routerLink="/admin/billing" routerLinkActive="active">Billing & Reports</a></li>
+    }
+
+  </ul>
+
+  @if (isLoggedIn()) {
+    <div class="user-actions">
+      <span class="role-badge">{{ userRole() }}</span>
+      <button (click)="logout()" class="logout-btn">Logout</button>
+    </div>
+  }
+</nav>
