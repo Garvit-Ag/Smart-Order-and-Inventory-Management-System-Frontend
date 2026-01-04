@@ -1,0 +1,79 @@
+.billing-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.refresh-btn {
+  background-color: #34495e;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  overflow: hidden; /* Rounds the corners */
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #555;
+}
+
+tr:hover {
+  background-color: #fafafa;
+}
+
+/* Column Specifics */
+.amount {
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.1rem;
+}
+
+.time-text {
+  color: #888;
+  font-size: 0.85rem;
+  margin-left: 5px;
+}
+
+/* Badges */
+.badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mode { background-color: #e2e8f0; color: #4a5568; }
+
+/* Dynamic Status Colors */
+.status-COMPLETED { background-color: #97e2bb; color: #065f46; } /* Green */
+.status-PENDING { background-color: #fef3c7; color: #92400e; } /* Orange */
+
+.empty-state { text-align: center; padding: 30px; color: #888; }
+.loading-text { text-align: center; font-style: italic; color: #666; }

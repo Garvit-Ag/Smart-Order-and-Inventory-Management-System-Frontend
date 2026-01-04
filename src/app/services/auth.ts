@@ -2,6 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class AuthService {
 
   private readonly http = inject(HttpClient);
   private readonly apiUrl = 'http://localhost:8765/auth';
+  router = inject(Router);
 
   //register
   registerUser(userData: any): Observable<string> {
@@ -70,6 +72,7 @@ export class AuthService {
 
   //logout
   logout() {
+    this.router.navigate(['/home']);
     localStorage.clear();
     this.currentUserRole.set(null);
     this.currentUserEmail.set(null);

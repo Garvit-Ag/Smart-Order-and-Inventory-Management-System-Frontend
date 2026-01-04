@@ -1,0 +1,58 @@
+<div class="billing-container">
+  <header class="page-header">
+    <h2>Billing & Reports</h2>
+    <button class="refresh-btn" (click)="loadBills()">Refresh Data</button>
+  </header>
+
+  @if (errorMessage()) {
+    <div class="error-banner">{{ errorMessage() }}</div>
+  }
+
+  @if (isLoading()) {
+    <p class="loading-text">Loading transactions...</p>
+  } 
+  
+  @else {
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Bill ID</th>
+            <th>Date & Time</th>
+            <th>Amount</th>
+            <th>Payment Mode</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (bill of bills(); track bill.billId) {
+            <tr>
+              <td>#{{ bill.billId }}</td>
+              
+              <td>
+                {{ bill.billingDate | date:'mediumDate' }} 
+                <span class="time-text">{{ bill.billingTime }}</span>
+              </td>
+              
+              <td class="amount">{{ bill.amount | currency:'USD' }}</td>
+              
+              <td>
+                <span class="badge mode">{{ bill.paymentMode }}</span>
+              </td>
+              
+              <td>
+                <span class="badge" [ngClass]="'status-' + bill.paymentStatus">
+                  {{ bill.paymentStatus }}
+                </span>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="empty-state">No billing records found.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
