@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { Token } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,10 @@ export class AuthService {
           this.isLoggedIn.set(true);
         })
       );
+  }
+
+  getToken(): string {
+    return localStorage.getItem('token') || '';
   }
 
   //profile

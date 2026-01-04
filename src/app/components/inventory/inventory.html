@@ -1,0 +1,25 @@
+<div class="inventory-container">
+  <h2>Inventory Management</h2>
+
+  <div class="product-grid">
+    @for (p of products(); track p.id) {
+      <div class="product-card">
+        <div class="product-info">
+          <h3>{{ p.name }} <span>({{ p.brand }})</span></h3>
+          <p class="desc">{{ p.description }}</p>
+          <div class="stats">
+            <span class="price-tag">{{ p.price | currency }}</span>
+            <span class="stock-tag" [class.low]="p.stock < 10">Stock: {{ p.stock }}</span>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <button class="btn-price" (click)="changePrice(p.id)">Update Price</button>
+          <button class="btn-stock" (click)="changeStock(p.id)">Update Stock</button>
+        </div>
+      </div>
+    } @empty {
+      <p>No products found in inventory.</p>
+    }
+  </div>
+</div>

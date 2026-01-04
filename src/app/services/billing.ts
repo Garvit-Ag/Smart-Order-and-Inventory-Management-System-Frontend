@@ -12,13 +12,6 @@ export class BillingService {
 
   // No headers needed here! Your AuthInterceptor handles the token automatically.
   getAllBills(): Observable<Bill[]> {
-    
-    const token = localStorage.getItem('token'); // Assuming you have this method
-    
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.get<Bill[]>(this.apiUrl, { headers });
+    return this.http.get<Bill[]>(this.apiUrl);
   }
 }
