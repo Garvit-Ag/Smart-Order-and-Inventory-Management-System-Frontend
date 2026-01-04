@@ -27,5 +27,8 @@ export class ProductService {
     return this.http.put(`${this.baseUrl}/update/stock/${id}`, {}, { params, responseType: 'text' });
   }
 
-  
+  addProduct(productData: any): Observable<string> {
+  // Sending JSON object as RequestBody
+  return this.http.post(`${this.baseUrl}/add`, productData, { responseType: 'text' });
+}
 }

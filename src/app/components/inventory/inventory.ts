@@ -1,15 +1,16 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, } from '@angular/common';
 import { ProductService } from '../../services/product';
 import { PopupService } from '../../services/popup';
 import { ConfirmationService } from '../../services/confirmation';
 import { Product } from '../../models/product.model';
 import { InputDialogService } from '../../services/inputdialog';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe],
+  imports: [CommonModule, CurrencyPipe, ReactiveFormsModule],
   templateUrl: './inventory.html',
   styleUrl: './inventory.css'
 })
@@ -18,6 +19,8 @@ export class InventoryComponent implements OnInit {
   private popup = inject(PopupService);
   private confirm = inject(ConfirmationService);
   private inputDialog = inject(InputDialogService);
+  private fb = inject(FormBuilder);
+  showAddModal = signal(false); // Signal to toggle modal
 
   products = signal<Product[]>([]);
 
@@ -67,6 +70,30 @@ export class InventoryComponent implements OnInit {
           },
           error: (err) => this.popup.handleError(err,"Failed to update price")
         });
+    }
+  }
+
+  // Define the form
+  productForm: FormGroup = this.fb.group({
+    name: ['', Validators.required],
+    description: ['', Validators.required],
+    brand: ['', Validators.required],
+    price: [0, [Validators.required, Validators.min(1)]],
+    stock: [0, [Validators.required, Validators.min(0)]]
+  });
+
+  // Method to save product
+  saveProduct() {
+    if (this.productForm.valid) {
+      this.productService.addProduct(this.productForm.value).subscribe({
+        next: (msg) => {
+          this.popup.show(msg, 'success');
+          this.showAddModal.set(false); // Close modal
+          this.productForm.reset();     // Clear form
+          this.loadProducts();          // Refresh list
+        },
+        error: () => this.popup.show("Failed to add product", "error")
+      });
     }
   }
 }
