@@ -1,0 +1,55 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* Darkens the background */
+  z-index: 10000; /* Higher than everything else */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px); /* Nice modern blur effect */
+}
+
+.modal-box {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: popIn 0.2s ease-out;
+}
+
+.modal-box h3 { margin-top: 0; color: #333; }
+.modal-box p { color: #666; font-size: 1.1rem; margin-bottom: 25px; }
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+button:active { transform: scale(0.95); }
+
+.btn-no { background: #e0e0e0; color: #333; }
+.btn-no:hover { background: #d6d6d6; }
+
+.btn-yes { background: #e74c3c; color: white; } /* Red for caution */
+.btn-yes:hover { background: #c0392b; }
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

@@ -2,6 +2,8 @@ import { Component, inject, signal } from '@angular/core'; // Added inject
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth'; // Import your service
+import { ConfirmationService } from '../../services/confirmation';
+import { PopupService } from '../../services/popup';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +15,8 @@ import { AuthService } from '../../services/auth'; // Import your service
 export class NavbarComponent {
   public auth = inject(AuthService);
   private router = inject(Router);
+  confirmation = inject(ConfirmationService);
+  popup = inject(PopupService)
 
   constructor() {}
 
@@ -25,65 +29,42 @@ export class NavbarComponent {
     this.showDropdown.update(v => !v);
   }
 
-  // deleteAccount() {
-  //   const confirmed = confirm(
-  //     'Are you sure you want to delete your account? This action cannot be undone and will permanently remove all your data, orders, and account information.'
-  //   );
-    
-  //   if (confirmed) {
-  //     this.auth.deleteAccount().subscribe({
-  //       next: (response) => {
-  //         alert('Your account has been successfully deleted.');
-  //         this.logout();
-  //         this.router.navigate(['/home']);
-  //       },
-  //       error: (error) => {
-  //         console.error('Error deleting account:', error);
-  //         alert('Failed to delete account. Please try again or contact support.');
-  //       }
-  //     });
-  //   }
-  // }
+async deleteAccount() {
+    // 1. Ask for confirmation
+    const isConfirmed = await this.confirmation.ask(
+      "Are you sure you want to delete your account? This action cannot be undone and will permanently remove all your data, orders, and account information."
+    );
 
-  showConfirmPopup = false;
-showSuccessPopup = false;
-showErrorPopup = false;
-
-deleteAccountConfirmed() {
-  this.auth.deleteAccount().subscribe({
-    next: () => {
-      this.showConfirmPopup = false;
-      this.showSuccessPopup = true;
-
-      setTimeout(() => {
-        this.showSuccessPopup = false;
-        this.logout();
-        this.router.navigate(['/home']);
-      }, 2000);
-    },
-    error: () => {
-      this.showConfirmPopup = false;
-      this.showErrorPopup = true;
-
-      setTimeout(() => {
-        this.showErrorPopup = false;
-      }, 3000);
+    // 2. If confirmed, proceed with deletion
+    if (isConfirmed) {
+      this.auth.deleteAccount().subscribe({
+        next: (response) => {
+          console.log('Delete response:', response); // Debug log
+          this.popup.success('Your account has been successfully deleted.');
+          this.showDropdown = signal(false);
+          this.auth.logout();
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error('Delete error:', err);
+          this.popup.handleError(err, 'Failed to delete account. Please try again or contact support.');
+        }
+      });
     }
-  });
-}
-
-openDeletePopup() {
-  this.showConfirmPopup = true;
-}
-
-closePopup() {
-  this.showConfirmPopup = false;
-}
+    // If they clicked Cancel, nothing happens
+  }
 
 
-  logout() {
-    this.showDropdown = signal(false);
-    this.auth.logout();
+ async logout() {
+    // 1. Ask the question
+    const isConfirmed = await this.confirmation.ask("Are you sure you want to log out?");
+
+    // 2. Check the answer
+    if (isConfirmed) {
+      this.showDropdown = signal(false);
+      this.auth.logout();
+    }
+    // If they clicked Cancel, nothing happens.
   }
   
 }

@@ -50,8 +50,7 @@
         <hr>
         <button class="logout-link " (click)="logout()">Logout</button>
         @if (auth.currentUserRole() === 'CUSTOMER') {
-        <!-- <br><button class="logout-link" (click)="deleteAccount()">Delete Account</button> -->
-         <button class="logout-link" (click)="openDeletePopup()">Delete Account</button>
+        <br><button class="logout-link" (click)="deleteAccount()">Delete Account</button>
 
         }
     </div>
@@ -59,30 +58,3 @@
 </div>
 }
 </nav>
-@if (showConfirmPopup) {
-  <div class="popup-backdrop">
-    <div class="popup">
-      <h3>Confirm Account Deletion</h3>
-      <p>
-        This action is permanent and will delete all your data, orders, and account.
-      </p>
-
-      <div class="popup-actions">
-        <button class="btn-danger" (click)="deleteAccountConfirmed()">Delete</button>
-        <button class="btn-secondary" (click)="closePopup()">Cancel</button>
-      </div>
-    </div>
-  </div>
-}
-
-@if (showSuccessPopup) {
-  <div class="toast success">
-    ✅ Account deleted successfully
-  </div>
-}
-
-@if (showErrorPopup) {
-  <div class="toast error">
-    ❌ Failed to delete account. Try again.
-  </div>
-}

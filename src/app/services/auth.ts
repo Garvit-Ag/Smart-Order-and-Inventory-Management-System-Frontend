@@ -65,7 +65,7 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.delete(`${this.apiUrl}/delete/${userId}`, { headers });
+    return this.http.delete(`${this.apiUrl}/delete`, { headers });
   }
 
   //logout
