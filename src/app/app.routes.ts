@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login';
 import { BillingComponent } from './components/billing/billing';
 import { InventoryComponent } from './components/inventory/inventory';
 import { AdminOrdersComponent } from './components/admin-orders/admin-orders';
+import { ProductCatalogComponent } from './components/product-catalog/product-catalog';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Default route
@@ -16,5 +17,6 @@ export const routes: Routes = [
   { path: 'admin/inventory', component: InventoryComponent },
   { path: 'manager/inventory', component: InventoryComponent },
   { path: 'admin/orders', component: AdminOrdersComponent },
-  { path: 'sales/orders', component: AdminOrdersComponent }
+  { path: 'sales/orders', component: AdminOrdersComponent },
+  { path: 'products', component: ProductCatalogComponent }
 ];

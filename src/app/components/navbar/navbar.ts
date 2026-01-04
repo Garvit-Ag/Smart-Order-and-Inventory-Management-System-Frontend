@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth'; // Import your service
 import { ConfirmationService } from '../../services/confirmation';
 import { PopupService } from '../../services/popup';
+import { CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-navbar',
@@ -17,6 +18,7 @@ export class NavbarComponent {
   private router = inject(Router);
   confirmation = inject(ConfirmationService);
   popup = inject(PopupService)
+  cart = inject(CartService);
 
   constructor() {}
 

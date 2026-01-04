@@ -1,0 +1,34 @@
+<div class="catalog-container">
+  <header>
+    <h1>Browse Our Collection</h1>
+    <p>Discover quality products at the best prices.</p>
+  </header>
+
+  <div class="product-list">
+    @for (p of products(); track p.id) {
+      <div class="item-card">
+        <div class="image-placeholder">📦</div>
+        <div class="details">
+          <span class="brand">{{ p.brand }}</span>
+          <h3>{{ p.name }}</h3>
+          <p class="price">{{ p.price | currency }}</p>
+          
+          <div class="availability">
+            @if (p.stock > 0) {
+              <span class="stock-ok">✓ In Stock</span>
+            } @else {
+              <span class="stock-none">Out of Stock</span>
+            }
+          </div>
+
+          <button 
+            [disabled]="p.stock <= 0" 
+            (click)="addToCart(p)"
+            class="add-btn">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

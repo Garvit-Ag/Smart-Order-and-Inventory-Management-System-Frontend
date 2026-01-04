@@ -15,7 +15,9 @@
     @if (auth.currentUserRole() === 'CUSTOMER') {
       <li><a routerLink="/products" routerLinkActive="active">Browse Products</a></li>
       <li><a routerLink="/my-orders" routerLinkActive="active">My Orders</a></li>
-      <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
+      <a routerLink="/cart" class="cart-link">
+      Cart <span class="cart-badge">{{ cart.totalItems() }}</span>
+    </a>
     }
 
     @if (auth.currentUserRole() === 'ADMIN') {
