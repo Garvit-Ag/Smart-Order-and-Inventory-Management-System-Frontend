@@ -2,6 +2,7 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { OrderService } from '../../services/order';
 import { OrderTable, OrderItem } from '../../models/order.model';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-admin-orders',
@@ -12,6 +13,7 @@ import { OrderTable, OrderItem } from '../../models/order.model';
 })
 export class AdminOrdersComponent implements OnInit {
   private orderService = inject(OrderService);
+  private auth = inject(AuthService);
 
   orders = signal<OrderTable[]>([]);
   selectedOrderItems = signal<OrderItem[]>([]);
@@ -19,8 +21,21 @@ export class AdminOrdersComponent implements OnInit {
   showItemsModal = signal(false);
 
   ngOnInit() {
-    this.orderService.getAllOrders().subscribe(data => this.orders.set(data));
+  const role = this.auth.currentUserRole();
+
+  if (role === 'CUSTOMER') {
+    this.orderService.getMyOrders()
+      .subscribe(data => this.orders.set(data));
+  } else {
+    this.orderService.getAllOrders()
+      .subscribe(data => this.orders.set(data));
   }
+}
+
+
+  // ngOnInit() {
+  //   this.orderService.getAllOrders().subscribe(data => this.orders.set(data));
+  // }
 
   viewItems(orderId: number) {
     this.orderService.getOrderItems(orderId).subscribe(items => {

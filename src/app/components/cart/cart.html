@@ -1,0 +1,55 @@
+<div class="cart-page">
+  <h2>Your Shopping Cart</h2>
+
+  @if (cart.items().length > 0) {
+    <div class="cart-container">
+      <div class="items-list">
+        @for (item of cart.items(); track item.productId) {
+          <div class="item-row">
+            <div class="info">
+              <h4>{{ item.name }}</h4>
+              <p>{{ item.price | currency }} each</p>
+            </div>
+            
+            <div class="qty-controls">
+              <button (click)="cart.updateQuantity(item.productId, -1)">-</button>
+              <span>{{ item.quantity }}</span>
+              <button (click)="cart.updateQuantity(item.productId, 1)">+</button>
+            </div>
+
+            <div class="subtotal">
+              {{ (item.price * item.quantity) | currency }}
+            </div>
+
+            <button class="btn-remove" (click)="cart.removeItem(item.productId)">×</button>
+          </div>
+        }
+      </div>
+
+      <div class="order-form">
+        <h3>Checkout Details</h3>
+        
+        <label>Shipping Address</label>
+        <textarea [(ngModel)]="address" placeholder="Enter full address..."></textarea>
+
+        <label>Payment Mode</label>
+        <select [(ngModel)]="paymentMode">
+          <option value="CASH">Cash on Delivery</option>
+          <option value="CREDIT_CARD">Credit Card</option>
+          <option value="DEBIT_CARD">Debit Card</option>
+          <option value="NET_BANKING">Net Banking</option>
+          <option value="UPI">UPI / QR</option>
+        </select>
+
+        <div class="final-sum">
+          <span>Total Payable:</span>
+          <strong>{{ cart.totalPrice() | currency }}</strong>
+        </div>
+
+        <button class="btn-submit" (click)="submitOrder()">Place Order</button>
+      </div>
+    </div>
+  } @else {
+    <div class="empty-msg">Your cart is lonely. Go add some products!</div>
+  }
+</div>

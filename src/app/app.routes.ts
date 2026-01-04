@@ -6,6 +6,7 @@ import { BillingComponent } from './components/billing/billing';
 import { InventoryComponent } from './components/inventory/inventory';
 import { AdminOrdersComponent } from './components/admin-orders/admin-orders';
 import { ProductCatalogComponent } from './components/product-catalog/product-catalog';
+import { CartComponent } from './components/cart/cart';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Default route
@@ -18,5 +19,7 @@ export const routes: Routes = [
   { path: 'manager/inventory', component: InventoryComponent },
   { path: 'admin/orders', component: AdminOrdersComponent },
   { path: 'sales/orders', component: AdminOrdersComponent },
-  { path: 'products', component: ProductCatalogComponent }
+  { path: 'products', component: ProductCatalogComponent },
+  { path: 'my-orders', component: AdminOrdersComponent },
+  { path: 'cart', component: CartComponent}
 ];

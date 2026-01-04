@@ -19,9 +19,12 @@ export class OrderService {
   placeOrder(orderDto: any): Observable<string> {
     return this.http.post(this.baseUrl, orderDto, { responseType: 'text' });
   }
-
   // To fetch order history for the current user
   getMyOrders(): Observable<OrderTable[]> {
     return this.http.get<OrderTable[]>(`${this.baseUrl}`); 
+  }
+
+  createOrder(orderDto: any): Observable<string> {
+    return this.http.post(this.baseUrl, orderDto, { responseType: 'text' });
   }
 }

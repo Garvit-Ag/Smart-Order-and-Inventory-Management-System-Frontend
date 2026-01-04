@@ -1,26 +1,64 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { Product } from '../models/product.model';
 
+// This matches your OrderItemDto structure
+export interface CartItem {
+  productId: number;
+  name: string;      // For UI display
+  price: number;
+  quantity: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  // Signal to store cart items
-  cartItems = signal<Product[]>([]);
+  // The master list of items in the cart
+  items = signal<CartItem[]>([]);
 
-  // Computed signals for automatic updates
-  totalItems = computed(() => this.cartItems().length);
+  // Automatically calculate total price whenever items change
   totalPrice = computed(() => 
-    this.cartItems().reduce((acc, item) => acc + item.price, 0)
+    this.items().reduce((sum, item) => sum + (item.price * item.quantity), 0)
+  );
+
+  // Automatically count total physical items
+  totalCount = computed(() => 
+    this.items().reduce((sum, item) => sum + item.quantity, 0)
   );
 
   addToCart(product: Product) {
-    this.cartItems.update(items => [...items, product]);
+    const currentItems = this.items();
+    const existingItem = currentItems.find(i => i.productId === product.id);
+
+    if (existingItem) {
+      // If product exists, increase quantity
+      this.items.update(items => items.map(i => 
+        i.productId === product.id ? { ...i, quantity: i.quantity + 1 } : i
+      ));
+    } else {
+      // If new, add to list
+      this.items.update(items => [...items, {
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: 1
+      }]);
+    }
   }
 
-  removeFromCart(productId: number) {
-    this.cartItems.update(items => items.filter(p => p.id !== productId));
+  updateQuantity(productId: number, delta: number) {
+    this.items.update(items => items.map(i => {
+      if (i.productId === productId) {
+        const newQty = i.quantity + delta;
+        return newQty > 0 ? { ...i, quantity: newQty } : i;
+      }
+      return i;
+    }));
   }
 
-  clearCart() {
-    this.cartItems.set([]);
+  removeItem(productId: number) {
+    this.items.update(items => items.filter(i => i.productId !== productId));
+  }
+
+  clear() {
+    this.items.set([]);
   }
 }
