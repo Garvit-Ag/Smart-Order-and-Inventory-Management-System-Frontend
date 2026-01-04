@@ -12,6 +12,10 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.baseUrl}/get`);
   }
 
+  deleteProduct(id: number): Observable<string>{
+    return this.http.delete(`${this.baseUrl}/${id}`,{responseType: 'text'});
+  }
+
   // Note: Using HttpParams because your backend uses @RequestParam
   updatePrice(id: number, price: number): Observable<string> {
     const params = new HttpParams().set('price', price.toString());
@@ -22,4 +26,6 @@ export class ProductService {
     const params = new HttpParams().set('stock', stock.toString());
     return this.http.put(`${this.baseUrl}/update/stock/${id}`, {}, { params, responseType: 'text' });
   }
+
+  
 }

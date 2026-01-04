@@ -16,6 +16,7 @@
         <div class="product-actions">
           <button class="btn-price" (click)="changePrice(p.id)">Update Price</button>
           <button class="btn-stock" (click)="changeStock(p.id)">Update Stock</button>
+          <button class="btn-delete" (click)="deleteProduct(p.id,p.name)">Delete</button>
         </div>
       </div>
     } @empty {

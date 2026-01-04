@@ -29,11 +29,11 @@
     }
 
     @if (auth.currentUserRole() === 'WAREHOUSE_MANAGER') {
-      <li><a routerLink="/admin/inventory" routerLinkActive="active">Manage Inventory</a></li>
+      <li><a routerLink="/manager/inventory" routerLinkActive="active">Manage Inventory</a></li>
     }
 
     @if (auth.currentUserRole() === 'FINANCE_OFFICER') {
-      <li><a routerLink="/admin/billing" routerLinkActive="active">Billing & Reports</a></li>
+      <li><a routerLink="/finance/billing" routerLinkActive="active">Billing & Reports</a></li>
     }
   }
 </ul>

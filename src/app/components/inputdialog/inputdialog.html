@@ -1,0 +1,22 @@
+@if (dialog.isVisible()) {
+  <div class="modal-overlay" (click)="dialog.cancel()">
+    <div class="modal-box input-dialog" (click)="$event.stopPropagation()">
+      <h3>{{ dialog.title() }}</h3>
+      
+      <input 
+        [type]="dialog.inputType()" 
+        [placeholder]="dialog.placeholder()"
+        [(ngModel)]="dialog.inputValue"
+        (keyup.enter)="dialog.submit()"
+        (keyup.escape)="dialog.cancel()"
+        class="dialog-input"
+        autofocus
+      />
+      
+      <div class="actions">
+        <button class="btn-cancel" (click)="dialog.cancel()">Cancel</button>
+        <button class="btn-submit" (click)="dialog.submit()">Submit</button>
+      </div>
+    </div>
+  </div>
+}

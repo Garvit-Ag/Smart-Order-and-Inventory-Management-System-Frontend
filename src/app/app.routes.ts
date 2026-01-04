@@ -10,6 +10,8 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'admin/billing', component: BillingComponent},
-  { path: 'admin/inventory', component: InventoryComponent }
+  { path: 'admin/billing', component: BillingComponent },
+  { path: 'finance/billing', component: BillingComponent },
+  { path: 'admin/inventory', component: InventoryComponent },
+  { path: 'manager/inventory', component: InventoryComponent }
 ];
