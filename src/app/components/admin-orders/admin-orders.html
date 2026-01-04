@@ -1,0 +1,64 @@
+<div class="orders-container">
+  <h2>All Customer Orders</h2>
+
+  <table class="main-table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>User ID</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (order of orders(); track order.orderId) {
+        <tr>
+          <td>#{{ order.orderId }}</td>
+          <td>{{ order.userId }}</td>
+          <td>{{ order.orderDate | date }}</td>
+          <td class="bold">{{ order.amount | currency }}</td>
+          <td><span class="status-badge" [ngClass]="order.status">{{ order.status }}</span></td>
+          <td>
+            <button class="btn-view" (click)="viewItems(order.orderId)">View Items</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  @if (showItemsModal()) {
+    <div class="modal-overlay" (click)="showItemsModal.set(false)">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <header>
+          <h3>Items for Order #{{ selectedOrderId() }}</h3>
+          <button class="close-x" (click)="showItemsModal.set(false)">×</button>
+        </header>
+
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th>Item ID</th>
+              <th>Product ID</th>
+              <th>Qty</th>
+              <th>Price Each</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of selectedOrderItems(); track item.orderItemId) {
+              <tr>
+                <td>{{ item.orderItemId }}</td>
+                <td>{{ item.productId }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.priceAtPurchase | currency }}</td>
+                <td class="bold">{{ (item.quantity * item.priceAtPurchase) | currency }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>
