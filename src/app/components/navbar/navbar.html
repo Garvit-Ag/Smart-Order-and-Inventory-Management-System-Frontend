@@ -37,20 +37,52 @@
     }
   }
 </ul>
-  @if (auth.isLoggedIn()) {
-  <div class="profile-section">
+@if (auth.isLoggedIn()) {
+<div class="profile-section">
     <div class="logo" (click)="toggleDropdown()">
-        <img src="/person_11081570.png" alt="Profile"/>
+        <img src="/person_11081570.png" alt="Profile" />
     </div>
 
     @if (showDropdown()) {
-      <div class="profile-card">
-        <p><strong>Email:</strong> {{ user?.email }}</p>
-        <p><strong>Access:</strong> {{ user?.role }}</p>
+    <div class="profile-card">
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Access:</strong> {{ user.role }}</p>
         <hr>
         <button class="logout-link " (click)="logout()">Logout</button>
-      </div>
+        @if (auth.currentUserRole() === 'CUSTOMER') {
+        <!-- <br><button class="logout-link" (click)="deleteAccount()">Delete Account</button> -->
+         <button class="logout-link" (click)="openDeletePopup()">Delete Account</button>
+
+        }
+    </div>
     }
-  </div>
+</div>
 }
 </nav>
+@if (showConfirmPopup) {
+  <div class="popup-backdrop">
+    <div class="popup">
+      <h3>Confirm Account Deletion</h3>
+      <p>
+        This action is permanent and will delete all your data, orders, and account.
+      </p>
+
+      <div class="popup-actions">
+        <button class="btn-danger" (click)="deleteAccountConfirmed()">Delete</button>
+        <button class="btn-secondary" (click)="closePopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showSuccessPopup) {
+  <div class="toast success">
+    ✅ Account deleted successfully
+  </div>
+}
+
+@if (showErrorPopup) {
+  <div class="toast error">
+    ❌ Failed to delete account. Try again.
+  </div>
+}

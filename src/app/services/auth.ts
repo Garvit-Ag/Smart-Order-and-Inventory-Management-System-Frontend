@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
@@ -8,16 +8,15 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthService {
 
-  private http = inject(HttpClient);
-  
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = 'http://localhost:8765/auth';
+
   //register
-  private apiUrl = 'http://localhost:8765/auth/register';
   registerUser(userData: any): Observable<string> {
-    return this.http.post(this.apiUrl, userData, { responseType: 'text' });
+    return this.http.post(`${this.apiUrl}/register`, userData, { responseType: 'text' });
   }
 
   //login
-  private loginUrl = 'http://localhost:8765/auth/login';
   currentUserRole = signal<string | null>(localStorage.getItem('role'));
   currentUserEmail = signal<string | null>(localStorage.getItem('email'));
   currentUserId = signal<string | null>(localStorage.getItem('userId'));
@@ -26,7 +25,7 @@ export class AuthService {
 
   login(credentials: any): Observable<string> {
     return this.http
-      .post(this.loginUrl, credentials, { responseType: 'text' })
+      .post(`${this.apiUrl}/login`, credentials, { responseType: 'text' })
       .pipe(
         tap(token => {
           localStorage.setItem('token', token);
@@ -56,6 +55,17 @@ export class AuthService {
       id: this.currentUserId(),      // Claim "userId"
       role: this.currentUserRole()       // Claim "role"
     }
+  }
+
+  deleteAccount(): Observable<any> {
+    const userId = this.currentUserId; // Assuming you have this method
+    const token = localStorage.getItem('token'); // Assuming you have this method
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.delete(`${this.apiUrl}/delete/${userId}`, { headers });
   }
 
   //logout
