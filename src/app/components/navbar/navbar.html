@@ -1,62 +1,64 @@
 <nav class="navbar">
   <div class="logo">
-      <img src="/Logo.jpg" alt="SmartLogistics Logo" />
-      <span>SmartLogistics</span>
-    </div>
+    <img src="/Logo.jpg" alt="SmartLogistics Logo" />
+    <span>SmartLogistics</span>
+  </div>
 
- <ul class="nav-links">
-  <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+  <ul class="nav-links">
+    <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
 
-  @if (!auth.isLoggedIn()) {
+    @if (!auth.isLoggedIn()) {
     <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
     <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
-  } @else {
+    } @else {
     <!-- User is logged in, check role -->
     @if (auth.currentUserRole() === 'CUSTOMER') {
-      <li><a routerLink="/products" routerLinkActive="active">Browse Products</a></li>
-      <li><a routerLink="/my-orders" routerLinkActive="active">My Orders</a></li>
-      <a routerLink="/cart" class="cart-link">
-      Cart <span class="cart-badge">{{ cart.totalCount() }}</span>
-    </a>
+    <li><a routerLink="/products" routerLinkActive="active">Browse Products</a></li>
+    <li><a routerLink="/my-orders" routerLinkActive="active">My Orders</a></li>
+    <li>
+      <a routerLink="/cart" class="cart-link" routerLinkActive="active">
+        Cart <span class="cart-badge">{{ cart.totalCount() }}</span>
+      </a>
+    </li>
     }
 
     @if (auth.currentUserRole() === 'ADMIN') {
-      <li><a routerLink="/admin/inventory" routerLinkActive="active">Manage Inventory</a></li>
-      <li><a routerLink="/admin/orders" routerLinkActive="active">All Orders</a></li>
-      <li><a routerLink="/admin/billing" routerLinkActive="active">Billing & Reports</a></li>
+    <li><a routerLink="/admin/inventory" routerLinkActive="active">Manage Inventory</a></li>
+    <li><a routerLink="/admin/orders" routerLinkActive="active">All Orders</a></li>
+    <li><a routerLink="/admin/billing" routerLinkActive="active">Billing & Reports</a></li>
     }
 
     @if (auth.currentUserRole() === 'SALES_EXECUTIVE') {
-      <li><a routerLink="/sales/orders" routerLinkActive="active">All Orders</a></li>
+    <li><a routerLink="/sales/orders" routerLinkActive="active">All Orders</a></li>
     }
 
     @if (auth.currentUserRole() === 'WAREHOUSE_MANAGER') {
-      <li><a routerLink="/manager/inventory" routerLinkActive="active">Manage Inventory</a></li>
+    <li><a routerLink="/manager/inventory" routerLinkActive="active">Manage Inventory</a></li>
     }
 
     @if (auth.currentUserRole() === 'FINANCE_OFFICER') {
-      <li><a routerLink="/finance/billing" routerLinkActive="active">Billing & Reports</a></li>
+    <li><a routerLink="/finance/billing" routerLinkActive="active">Billing & Reports</a></li>
     }
-  }
-</ul>
-@if (auth.isLoggedIn()) {
-<div class="profile-section">
+    }
+  </ul>
+  @if (auth.isLoggedIn()) {
+  <div class="profile-section">
     <div class="logo" (click)="toggleDropdown()">
-        <img src="/person_11081570.png" alt="Profile" />
+      <img src="/person_11081570.png" alt="Profile" />
     </div>
 
     @if (showDropdown()) {
     <div class="profile-card">
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Access:</strong> {{ user.role }}</p>
-        <hr>
-        <button class="logout-link " (click)="logout()">Logout</button>
-        @if (auth.currentUserRole() === 'CUSTOMER') {
-        <br><button class="logout-link" (click)="deleteAccount()">Delete Account</button>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Access:</strong> {{ user.role }}</p>
+      <hr>
+      <button class="logout-link " (click)="logout()">Logout</button>
+      @if (auth.currentUserRole() === 'CUSTOMER') {
+      <br><button class="logout-link" (click)="deleteAccount()">Delete Account</button>
 
-        }
+      }
     </div>
     }
-</div>
-}
+  </div>
+  }
 </nav>

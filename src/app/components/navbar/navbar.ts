@@ -15,7 +15,7 @@ import { CartService } from '../../services/cart';
 })
 export class NavbarComponent {
   public auth = inject(AuthService);
-  private router = inject(Router);
+  private readonly router = inject(Router);
   confirmation = inject(ConfirmationService);
   popup = inject(PopupService)
   cart = inject(CartService);
@@ -32,16 +32,14 @@ export class NavbarComponent {
   }
 
 async deleteAccount() {
-    // 1. Ask for confirmation
     const isConfirmed = await this.confirmation.ask(
       "Are you sure you want to delete your account? This action cannot be undone and will permanently remove all your data, orders, and account information."
     );
 
-    // 2. If confirmed, proceed with deletion
     if (isConfirmed) {
       this.auth.deleteAccount().subscribe({
         next: (response) => {
-          console.log('Delete response:', response); // Debug log
+          console.log('Delete response:', response);
           this.popup.success('Your account has been successfully deleted.');
           this.showDropdown = signal(false);
           this.auth.logout();
@@ -53,20 +51,15 @@ async deleteAccount() {
         }
       });
     }
-    // If they clicked Cancel, nothing happens
   }
 
 
  async logout() {
-    // 1. Ask the question
     const isConfirmed = await this.confirmation.ask("Are you sure you want to log out?");
-
-    // 2. Check the answer
     if (isConfirmed) {
       this.showDropdown = signal(false);
       this.auth.logout();
     }
-    // If they clicked Cancel, nothing happens.
   }
   
 }
