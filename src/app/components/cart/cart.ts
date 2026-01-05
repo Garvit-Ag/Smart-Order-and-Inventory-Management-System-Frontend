@@ -46,7 +46,10 @@ export class CartComponent {
         this.cart.clear();
         this.address = '';
       },
-      error: (err) => this.popup.show("Order Failed", "error")
+      error: (err) => {
+        console.log(err);
+        this.popup.handleError(err, "Order Failed");
+      }
     });
   }
 }

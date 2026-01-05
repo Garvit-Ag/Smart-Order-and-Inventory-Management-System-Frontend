@@ -22,8 +22,10 @@ export class AdminOrdersComponent implements OnInit {
 
   ngOnInit() {
   const role = this.auth.currentUserRole();
+  
 
   if (role === 'CUSTOMER') {
+    
     this.orderService.getMyOrders()
       .subscribe(data => this.orders.set(data));
   } else {
@@ -31,11 +33,6 @@ export class AdminOrdersComponent implements OnInit {
       .subscribe(data => this.orders.set(data));
   }
 }
-
-
-  // ngOnInit() {
-  //   this.orderService.getAllOrders().subscribe(data => this.orders.set(data));
-  // }
 
   viewItems(orderId: number) {
     this.orderService.getOrderItems(orderId).subscribe(items => {

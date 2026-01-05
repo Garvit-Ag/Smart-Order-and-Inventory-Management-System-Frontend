@@ -76,7 +76,8 @@ export class InventoryComponent implements OnInit {
   // Define the form
   productForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    description: ['', Validators.required],
+    url: [''],
+    description: [''],
     brand: ['', Validators.required],
     price: [0, [Validators.required, Validators.min(1)]],
     stock: [0, [Validators.required, Validators.min(0)]]

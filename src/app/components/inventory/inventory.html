@@ -32,6 +32,7 @@
         <form [formGroup] ="productForm" (ngSubmit)="saveProduct()">
           <input type="text" formControlName="name" placeholder="Product Name">
           <input type="text" formControlName="brand" placeholder="Brand">
+          <input type="text" formControlName="url" placeholder="Image Url">
           <textarea formControlName="description" placeholder="Description"></textarea>
           
           <div class="row">

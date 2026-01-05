@@ -39,7 +39,6 @@
         <table class="items-table">
           <thead>
             <tr>
-              <th>Item ID</th>
               <th>Product ID</th>
               <th>Qty</th>
               <th>Price Each</th>
@@ -49,7 +48,6 @@
           <tbody>
             @for (item of selectedOrderItems(); track item.orderItemId) {
               <tr>
-                <td>{{ item.orderItemId }}</td>
                 <td>{{ item.productId }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.priceAtPurchase | currency }}</td>

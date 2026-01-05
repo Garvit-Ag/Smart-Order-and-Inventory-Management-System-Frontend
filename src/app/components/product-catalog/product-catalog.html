@@ -7,7 +7,7 @@
   <div class="product-list">
     @for (p of products(); track p.id) {
       <div class="item-card">
-        <div class="image-placeholder">📦</div>
+        <img [src]="p.url || 'ProductImage.jpg'" alt="Product img" class="image-placeholder">
         <div class="details">
           <span class="brand">{{ p.brand }}</span>
           <h3>{{ p.name }}</h3>
