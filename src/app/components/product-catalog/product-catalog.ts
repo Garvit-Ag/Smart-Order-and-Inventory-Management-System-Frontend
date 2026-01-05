@@ -13,9 +13,9 @@ import { Product } from '../../models/product.model';
   styleUrl: './product-catalog.css'
 })
 export class ProductCatalogComponent implements OnInit {
-  private productService = inject(ProductService);
-  private cartService = inject(CartService);
-  private popup = inject(PopupService);
+  private readonly productService = inject(ProductService);
+  private readonly cartService = inject(CartService);
+  private readonly popup = inject(PopupService);
 
   products = signal<Product[]>([]);
 
