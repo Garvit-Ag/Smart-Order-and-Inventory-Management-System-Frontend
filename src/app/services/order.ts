@@ -5,8 +5,8 @@ import { OrderTable, OrderItem } from '../models/order.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-  private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:8765/order';
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = 'http://localhost:8765/order';
 
   getAllOrders(): Observable<OrderTable[]> {
     return this.http.get<OrderTable[]>(`${this.baseUrl}/get`);
@@ -19,7 +19,7 @@ export class OrderService {
   placeOrder(orderDto: any): Observable<string> {
     return this.http.post(this.baseUrl, orderDto, { responseType: 'text' });
   }
-  // To fetch order history for the current user
+  
   getMyOrders(): Observable<OrderTable[]> {
     return this.http.get<OrderTable[]>(`${this.baseUrl}`); 
   }
