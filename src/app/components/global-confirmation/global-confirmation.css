@@ -4,12 +4,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6); /* Darkens the background */
-  z-index: 10000; /* Higher than everything else */
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10000;
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(2px); /* Nice modern blur effect */
+  backdrop-filter: blur(2px);
 }
 
 .modal-box {

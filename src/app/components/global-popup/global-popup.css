@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 9999; /* Sit on top of everything */
+  z-index: 9999;
   pointer-events: none; /* Let clicks pass through if not on the box */
   display: flex;
   justify-content: center;

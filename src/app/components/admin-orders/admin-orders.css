@@ -4,12 +4,18 @@
   width: 100%; border-collapse: collapse; background: white; margin-top: 1rem;
 }
 
-th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
-th { background: #f4f7f6; color: #666; }
+th, td { 
+  padding: 12px; 
+  border-bottom: 1px solid #ddd; 
+  text-align: left; 
+}
+th { 
+  background: #f4f7f6; 
+  color: #666; 
+}
 
 .bold { font-weight: bold; }
 
-/* Status Badges */
 .status-badge {
   padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;
 }

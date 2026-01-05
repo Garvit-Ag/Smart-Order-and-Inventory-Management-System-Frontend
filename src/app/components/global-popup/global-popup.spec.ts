@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GlobalPopup } from './global-popup';
+import { GlobalPopupComponent } from './global-popup';
 
 describe('GlobalPopup', () => {
-  let component: GlobalPopup;
-  let fixture: ComponentFixture<GlobalPopup>;
+  let component: GlobalPopupComponent;
+  let fixture: ComponentFixture<GlobalPopupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GlobalPopup]
+      imports: [GlobalPopupComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GlobalPopup);
+    fixture = TestBed.createComponent(GlobalPopupComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

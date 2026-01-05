@@ -11,7 +11,7 @@ import { Bill } from '../../models/bill.model';
   styleUrl: './billing.css'
 })
 export class BillingComponent implements OnInit {
-  private billingService = inject(BillingService);
+  private readonly billingService = inject(BillingService);
 
   // Signals for state
   bills = signal<Bill[]>([]);

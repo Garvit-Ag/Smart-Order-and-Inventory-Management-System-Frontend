@@ -20,14 +20,13 @@
   cursor: pointer;
 }
 
-/* Table Styles */
 table {
   width: 100%;
   border-collapse: collapse;
   background: white;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
   border-radius: 8px;
-  overflow: hidden; /* Rounds the corners */
+  overflow: hidden;
 }
 
 th, td {
@@ -46,7 +45,6 @@ tr:hover {
   background-color: #fafafa;
 }
 
-/* Column Specifics */
 .amount {
   font-weight: bold;
   font-family: monospace;
@@ -59,7 +57,6 @@ tr:hover {
   margin-left: 5px;
 }
 
-/* Badges */
 .badge {
   padding: 5px 10px;
   border-radius: 12px;

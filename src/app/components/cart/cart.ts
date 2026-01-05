@@ -14,8 +14,8 @@ import { PopupService } from '../../services/popup';
 })
 export class CartComponent {
   cart = inject(CartService);
-  private orderService = inject(OrderService);
-  private popup = inject(PopupService);
+  private readonly orderService = inject(OrderService);
+  private readonly popup = inject(PopupService);
 
   // Form Fields
   address: string = '';
