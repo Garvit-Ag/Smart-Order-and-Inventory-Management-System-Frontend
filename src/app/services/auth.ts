@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
-import { Token } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -58,21 +57,14 @@ export class AuthService {
   //profile
   getUserInfo() {
     return {
-      email: this.currentUserEmail(),      // Subject (set in your Jwts.builder)
-      id: this.currentUserId(),      // Claim "userId"
-      role: this.currentUserRole()       // Claim "role"
+      email: this.currentUserEmail(),     
+      id: this.currentUserId(),      
+      role: this.currentUserRole()      
     }
   }
 
   deleteAccount(): Observable<any> {
-    const userId = this.currentUserId; // Assuming you have this method
-    const token = localStorage.getItem('token'); // Assuming you have this method
-    
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.delete(`${this.apiUrl}/delete`, { headers });
+    return this.http.delete(`${this.apiUrl}/delete`);
   }
 
   //logout

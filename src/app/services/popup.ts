@@ -6,18 +6,14 @@ export type PopupType = 'success' | 'error' | 'info';
   providedIn: 'root'
 })
 export class PopupService {
-  // Signals to control the state
   isVisible = signal(false);
   message = signal('');
   type = signal<PopupType>('info');
 
-  // Method to show the popup
   show(msg: string, type: PopupType = 'info') {
     this.message.set(msg);
     this.type.set(type);
     this.isVisible.set(true);
-
-    // Auto-close after 3 seconds
     setTimeout(() => {
       this.close();
     }, 3000);
@@ -27,10 +23,9 @@ export class PopupService {
     this.isVisible.set(false);
   }
 
-  /**
-   * Centralized error handler for HTTP errors
-   * Extracts user-friendly error messages from various error formats
-   */
+  //Centralized error handler for HTTP errors
+  //Extracts user-friendly error messages from various error formats
+
   handleError(err: any, customMessage?: string) {
     let errorMessage = customMessage || "An error occurred. Please try again.";
     
@@ -48,7 +43,6 @@ export class PopupService {
     } else if (err.status >= 500) {
       errorMessage = "Server error. Please try again later.";
     } else if (err.error) {
-      // Try to extract custom error message from server
       if (typeof err.error === 'string' && err.error.length < 200) {
         errorMessage = err.error;
       } else if (err.error.message && typeof err.error.message === 'string') {
@@ -59,9 +53,6 @@ export class PopupService {
     this.show(errorMessage, 'error');
   }
 
-  /**
-   * Convenience methods for common popup types
-   */
   success(message: string) {
     this.show(message, 'success');
   }

@@ -5,8 +5,8 @@ import { Product } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:8765/product';
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = 'http://localhost:8765/product';
   
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.baseUrl}/get`);
@@ -16,7 +16,6 @@ export class ProductService {
     return this.http.delete(`${this.baseUrl}/${id}`,{responseType: 'text'});
   }
 
-  // Note: Using HttpParams because your backend uses @RequestParam
   updatePrice(id: number, price: number): Observable<string> {
     const params = new HttpParams().set('price', price.toString());
     return this.http.put(`${this.baseUrl}/update/price/${id}`, {}, { params, responseType: 'text' });
@@ -28,7 +27,6 @@ export class ProductService {
   }
 
   addProduct(productData: any): Observable<string> {
-  // Sending JSON object as RequestBody
   return this.http.post(`${this.baseUrl}/add`, productData, { responseType: 'text' });
 }
 }
