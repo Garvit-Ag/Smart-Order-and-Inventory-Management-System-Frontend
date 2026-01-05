@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth';
 })
 export class AdminOrdersComponent implements OnInit {
   private orderService = inject(OrderService);
-  private auth = inject(AuthService);
+  public auth = inject(AuthService);
 
   orders = signal<OrderTable[]>([]);
   selectedOrderItems = signal<OrderItem[]>([]);

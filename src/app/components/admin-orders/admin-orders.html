@@ -4,8 +4,10 @@
   <table class="main-table">
     <thead>
       <tr>
-        <th>Order ID</th>
+        <th>S.NO.</th>
+        @if (auth.currentUserRole() != 'CUSTOMER'){
         <th>User ID</th>
+        }
         <th>Date</th>
         <th>Amount</th>
         <th>Status</th>
@@ -13,10 +15,12 @@
       </tr>
     </thead>
     <tbody>
-      @for (order of orders(); track order.orderId) {
+      @for (order of orders(); track order.orderId; let i = $index) {
         <tr>
-          <td>#{{ order.orderId }}</td>
+          <td>#{{ i+1 }}</td>
+          @if (auth.currentUserRole() != 'CUSTOMER'){
           <td>{{ order.userId }}</td>
+          }
           <td>{{ order.orderDate | date }}</td>
           <td class="bold">{{ order.amount | currency }}</td>
           <td><span class="status-badge" [ngClass]="order.status">{{ order.status }}</span></td>
@@ -32,23 +36,23 @@
     <div class="modal-overlay" (click)="showItemsModal.set(false)">
       <div class="modal-content" (click)="$event.stopPropagation()">
         <header>
-          <h3>Items for Order #{{ selectedOrderId() }}</h3>
+          <h3>Items for this Order: </h3>
           <button class="close-x" (click)="showItemsModal.set(false)">×</button>
         </header>
 
         <table class="items-table">
           <thead>
             <tr>
-              <th>Product ID</th>
+              <th>S. NO.</th>
               <th>Qty</th>
               <th>Price Each</th>
               <th>Subtotal</th>
             </tr>
           </thead>
           <tbody>
-            @for (item of selectedOrderItems(); track item.orderItemId) {
+            @for (item of selectedOrderItems(); track item.orderItemId; let i = $index) {
               <tr>
-                <td>{{ item.productId }}</td>
+                <td>{{i+1}}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.priceAtPurchase | currency }}</td>
                 <td class="bold">{{ (item.quantity * item.priceAtPurchase) | currency }}</td>

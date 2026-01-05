@@ -1,6 +1,9 @@
 .app-layout {
   min-height: 100vh;
-  background-image: url('/worldmap2.jpg');
+  background-image: url('/WorldMap3.jpg');
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.8);
+  background-blend-mode: hue;
 }
